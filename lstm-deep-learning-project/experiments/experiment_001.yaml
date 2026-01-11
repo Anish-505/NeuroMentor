@@ -1,0 +1,23 @@
+# Contents of /lstm-deep-learning-project/lstm-deep-learning-project/experiments/experiment_001.yaml
+
+experiment_name: "LSTM Time Series Forecasting Experiment 001"
+description: "This experiment aims to evaluate the performance of the LSTM model on the time series dataset."
+parameters:
+  batch_size: 64
+  epochs: 100
+  learning_rate: 0.001
+  dropout_rate: 0.2
+  sequence_length: 30
+  train_test_split: 0.8
+  optimizer: "adam"
+  loss_function: "mean_squared_error"
+results:
+  best_validation_loss: null
+  best_epoch: null
+  metrics:
+    - name: "RMSE"
+      value: null
+    - name: "MAE"
+      value: null
+  model_path: null
+  logs_path: "logs/experiment_001.log"

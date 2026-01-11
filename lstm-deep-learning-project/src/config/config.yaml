@@ -1,0 +1,32 @@
+model:
+  type: LSTM
+  layers:
+    - units: 50
+      activation: 'tanh'
+      return_sequences: true
+    - units: 50
+      activation: 'tanh'
+      return_sequences: false
+  dropout: 0.2
+  optimizer: 'adam'
+  loss: 'mean_squared_error'
+
+training:
+  batch_size: 32
+  epochs: 100
+  validation_split: 0.2
+  early_stopping: true
+
+data:
+  raw_data_path: '../data/raw/dataset.csv'
+  processed_data_path: '../data/processed/dataset_processed.csv'
+  sequence_length: 60
+
+evaluation:
+  metrics:
+    - RMSE
+    - MAE
+
+inference:
+  future_steps: 10
+  prediction_interval: 1

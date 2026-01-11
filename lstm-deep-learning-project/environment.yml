@@ -1,0 +1,17 @@
+name: lstm-deep-learning-project
+channels:
+  - defaults
+dependencies:
+  - python=3.8
+  - numpy
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - tensorflow=2.6
+  - jupyterlab
+  - pyyaml
+  - pip
+  - pip:
+      - keras-tuner
+      - tqdm
