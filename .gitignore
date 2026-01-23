@@ -1,0 +1,66 @@
+# Flutter SDK (should not be in repo - users install separately)
+flutter/
+flutter.zip
+
+# IDE and Editor files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.venv/
+venv/
+ENV/
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# ML Model artifacts (large files - keep only final models if needed)
+*.h5
+*.pkl
+*.joblib
+*.onnx
+
+# Flutter/Dart
+neuro_mentor_flutter/.dart_tool/
+neuro_mentor_flutter/build/
+neuro_mentor_flutter/.packages
+neuro_mentor_flutter/.flutter-plugins
+neuro_mentor_flutter/.flutter-plugins-dependencies
+neuro_mentor_flutter/pubspec.lock
+
+# Android
+neuro_mentor_flutter/android/.gradle/
+neuro_mentor_flutter/android/app/build/
+neuro_mentor_flutter/android/local.properties
+*.apk
+*.aab
+
+# iOS
+neuro_mentor_flutter/ios/.symlinks/
+neuro_mentor_flutter/ios/Pods/
+neuro_mentor_flutter/ios/Flutter/Flutter.framework
+neuro_mentor_flutter/ios/Flutter/Flutter.podspec
+
+# Logs
+*.log
+npm-debug.log*
