@@ -7,7 +7,7 @@ class RecallWidget extends StatefulWidget {
   final String articleTitle;
   final List<String> keywords;
   final Function(String summary)? onSubmit;
-  
+
   const RecallWidget({
     super.key,
     required this.articleTitle,
@@ -43,24 +43,17 @@ class _RecallWidgetState extends State<RecallWidget> {
     final text = _controller.text.toLowerCase();
     setState(() {
       for (final keyword in widget.keywords) {
-        _keywordRecalled[keyword.toLowerCase()] = 
+        _keywordRecalled[keyword.toLowerCase()] =
             text.contains(keyword.toLowerCase());
       }
     });
-  }
-
-  void _submit() {
-    setState(() {
-      _submitted = true;
-    });
-    widget.onSubmit?.call(_controller.text);
   }
 
   @override
   Widget build(BuildContext context) {
     final recalledCount = _keywordRecalled.values.where((v) => v).length;
     final totalKeywords = widget.keywords.length;
-    
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -97,9 +90,9 @@ class _RecallWidgetState extends State<RecallWidget> {
               ],
             ),
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Keyword tracker
           Container(
             padding: const EdgeInsets.all(16),
@@ -136,7 +129,8 @@ class _RecallWidgetState extends State<RecallWidget> {
                   spacing: 8,
                   runSpacing: 8,
                   children: widget.keywords.map((keyword) {
-                    final found = _keywordRecalled[keyword.toLowerCase()] ?? false;
+                    final found =
+                        _keywordRecalled[keyword.toLowerCase()] ?? false;
                     return Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -166,8 +160,11 @@ class _RecallWidgetState extends State<RecallWidget> {
                           Text(
                             keyword,
                             style: AppTheme.bodySmall.copyWith(
-                              color: found ? AppTheme.focusedColor : AppTheme.textMuted,
-                              fontWeight: found ? FontWeight.bold : FontWeight.normal,
+                              color: found
+                                  ? AppTheme.focusedColor
+                                  : AppTheme.textMuted,
+                              fontWeight:
+                                  found ? FontWeight.bold : FontWeight.normal,
                             ),
                           ),
                         ],
@@ -178,9 +175,9 @@ class _RecallWidgetState extends State<RecallWidget> {
               ],
             ),
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Summary input
           Container(
             decoration: BoxDecoration(
@@ -204,9 +201,9 @@ class _RecallWidgetState extends State<RecallWidget> {
               ),
             ),
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Word count
           Text(
             '${_controller.text.split(RegExp(r'\s+')).where((s) => s.isNotEmpty).length} words',
@@ -214,7 +211,7 @@ class _RecallWidgetState extends State<RecallWidget> {
               color: AppTheme.textMuted,
             ),
           ),
-          
+
           if (_submitted) ...[
             const SizedBox(height: 16),
             Container(

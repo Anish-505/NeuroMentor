@@ -18,14 +18,15 @@ import '../../widgets/calibration/recall_widget.dart';
 /// Manages the timer, phases, and displays appropriate task widgets
 class CalibrationSessionScreen extends StatefulWidget {
   final String stateName;
-  
+
   const CalibrationSessionScreen({
     super.key,
     required this.stateName,
   });
 
   @override
-  State<CalibrationSessionScreen> createState() => _CalibrationSessionScreenState();
+  State<CalibrationSessionScreen> createState() =>
+      _CalibrationSessionScreenState();
 }
 
 class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
@@ -37,17 +38,13 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
   bool _isRunning = false;
   bool _isPaused = false;
   bool _isCompleted = false;
-  
+
   // For reading/recall phases
   Article? _currentArticle;
   List<String> _selectedKeywords = [];
-  
+
   // For listing phase
   String _listingCategory = '';
-  
-  // Current phase scores
-  int _phaseCorrect = 0;
-  int _phaseTotal = 0;
 
   @override
   void initState() {
@@ -67,11 +64,7 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
 
   void _preparePhase() async {
     final phase = _currentPhase;
-    
-    // Reset scores
-    _phaseCorrect = 0;
-    _phaseTotal = 0;
-    
+
     // Prepare phase-specific content
     if (phase.mode == PhaseMode.reading) {
       // Fetch article for reading phase
@@ -89,10 +82,10 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
     } else if (phase.mode == PhaseMode.listing) {
       // Random category for listing
       _listingCategory = phase.listingCategories?[
-        Random().nextInt(phase.listingCategories!.length)
-      ] ?? 'Things that are blue';
+              Random().nextInt(phase.listingCategories!.length)] ??
+          'Things that are blue';
     }
-    
+
     setState(() {});
   }
 
@@ -101,14 +94,14 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
       _isRunning = true;
       _isPaused = false;
     });
-    
+
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (_isPaused) return;
-      
+
       setState(() {
         _phaseSecondsRemaining--;
         _totalElapsedSeconds++;
-        
+
         if (_phaseSecondsRemaining <= 0) {
           _advancePhase();
         }
@@ -195,7 +188,7 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
   @override
   Widget build(BuildContext context) {
     final color = _stateConfig.color;
-    
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -206,17 +199,17 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
             children: [
               // Header
               _buildHeader(color),
-              
+
               // Progress bar
               _buildProgressBar(color),
-              
+
               // Main content
               Expanded(
                 child: _isCompleted
                     ? _buildCompletionScreen(color)
                     : _buildTaskArea(),
               ),
-              
+
               // Controls
               _buildControls(color),
             ],
@@ -290,8 +283,9 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
   Widget _buildProgressBar(Color color) {
     final totalSeconds = _stateConfig.totalSeconds;
     final overallProgress = _totalElapsedSeconds / totalSeconds;
-    final phaseProgress = 1 - (_phaseSecondsRemaining / _currentPhase.durationSeconds);
-    
+    final phaseProgress =
+        1 - (_phaseSecondsRemaining / _currentPhase.durationSeconds);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -304,7 +298,8 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
               final isComplete = index < _currentPhaseIndex;
               return Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(right: index < _stateConfig.phases.length - 1 ? 4 : 0),
+                  margin: EdgeInsets.only(
+                      right: index < _stateConfig.phases.length - 1 ? 4 : 0),
                   height: 6,
                   decoration: BoxDecoration(
                     color: isComplete
@@ -351,7 +346,7 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
     if (!_isRunning) {
       return _buildStartScreen();
     }
-    
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: _buildTaskWidget(),
@@ -410,9 +405,9 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 24),
-            
+
             // Start hint
             Text(
               'Press Start to begin',
@@ -434,7 +429,7 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
             breathPattern: _currentPhase.breathPattern ?? [4, 4, 4, 4],
           ),
         );
-        
+
       case PhaseMode.math:
         return Center(
           child: MathWidget(
@@ -442,33 +437,29 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
             startValue: _currentPhase.startValue ?? 100,
             stepValue: _currentPhase.stepValue,
             onScoreUpdate: (correct, total) {
-              setState(() {
-                _phaseCorrect = correct;
-                _phaseTotal = total;
-              });
+              // Score tracking for math task
+              // Not used in current implementation but available for future metrics
             },
           ),
         );
-        
+
       case PhaseMode.stroop:
         return Center(
           child: StroopWidget(
             onScoreUpdate: (correct, total) {
-              setState(() {
-                _phaseCorrect = correct;
-                _phaseTotal = total;
-              });
+              // Score tracking for Stroop task
+              // Not used in current implementation but available for future metrics
             },
           ),
         );
-        
+
       case PhaseMode.listing:
         return Center(
           child: ListingWidget(
             category: _listingCategory,
           ),
         );
-        
+
       case PhaseMode.reading:
         if (_currentArticle == null) {
           return const Center(child: CircularProgressIndicator());
@@ -477,7 +468,7 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
           article: _currentArticle!,
           keywords: _selectedKeywords,
         );
-        
+
       case PhaseMode.recall:
         return RecallWidget(
           articleTitle: _currentArticle?.title ?? 'Previous Article',
@@ -636,7 +627,8 @@ class _CalibrationSessionScreenState extends State<CalibrationSessionScreen> {
             GestureDetector(
               onTap: () => Navigator.pop(context),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [color, color.withAlpha(180)],

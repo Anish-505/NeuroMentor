@@ -6,57 +6,57 @@ import 'dart:math';
 /// Includes mock data generation for testing
 class EEGService {
   static EEGService? _instance;
-  
+
   bool _isConnected = false;
   bool _isStreaming = false;
   bool _useMockData = true; // Set to true for testing without hardware
-  
-  final StreamController<EEGData> _dataController = 
+
+  final StreamController<EEGData> _dataController =
       StreamController<EEGData>.broadcast();
-  
+
   Timer? _mockDataTimer;
   final Random _random = Random();
-  
+
   EEGService._();
-  
+
   static EEGService get instance {
     _instance ??= EEGService._();
     return _instance!;
   }
-  
+
   /// Stream of EEG data
   Stream<EEGData> get dataStream => _dataController.stream;
-  
+
   /// Whether connected to ESP32
   bool get isConnected => _isConnected || _useMockData;
-  
+
   /// Whether currently streaming data
   bool get isStreaming => _isStreaming;
-  
+
   /// Enable/disable mock data mode
   void setMockMode(bool enabled) {
     _useMockData = enabled;
   }
-  
+
   // ============================================================
   // CONNECTION (Placeholder for actual Bluetooth/WiFi implementation)
   // ============================================================
-  
+
   /// Scan for available ESP32 devices
   Future<List<String>> scanDevices() async {
     if (_useMockData) {
       return ['ESP32-NeuroMentor (Mock)'];
     }
-    
+
     // TODO: Implement actual Bluetooth scanning
     // Using flutter_blue_plus:
     // final devices = await FlutterBluePlus.scanResults.first;
     // return devices.map((r) => r.device.name).toList();
-    
+
     await Future.delayed(const Duration(seconds: 2));
     return [];
   }
-  
+
   /// Connect to ESP32 device
   Future<bool> connect(String deviceName) async {
     if (_useMockData) {
@@ -64,33 +64,33 @@ class EEGService {
       _isConnected = true;
       return true;
     }
-    
+
     // TODO: Implement actual connection
     // Using flutter_blue_plus:
     // final device = devices.firstWhere((d) => d.name == deviceName);
     // await device.connect();
     // _isConnected = true;
-    
+
     return false;
   }
-  
+
   /// Disconnect from ESP32
   Future<void> disconnect() async {
     _isConnected = false;
     await stopStreaming();
-    
+
     // TODO: Implement actual disconnection
   }
-  
+
   // ============================================================
   // STREAMING
   // ============================================================
-  
+
   /// Start streaming EEG data
   Future<void> startStreaming() async {
     if (_isStreaming) return;
     _isStreaming = true;
-    
+
     if (_useMockData) {
       _startMockDataGeneration();
     } else {
@@ -98,15 +98,15 @@ class EEGService {
       // _serialPort.write('start_live_monitoring\n');
     }
   }
-  
+
   /// Stop streaming EEG data
   Future<void> stopStreaming() async {
     _isStreaming = false;
     _mockDataTimer?.cancel();
-    
+
     // TODO: Send 'stop' command to ESP32
   }
-  
+
   /// Start calibration mode
   Future<void> startCalibration() async {
     if (!_useMockData) {
@@ -114,30 +114,30 @@ class EEGService {
     }
     await startStreaming();
   }
-  
+
   // ============================================================
   // MOCK DATA GENERATION
   // ============================================================
-  
+
   void _startMockDataGeneration() {
     _mockDataTimer?.cancel();
     _mockDataTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (!_isStreaming) return;
-      
+
       final data = _generateMockEEGData();
       _dataController.add(data);
     });
   }
-  
+
   EEGData _generateMockEEGData() {
     // Generate realistic-looking EEG band powers
     // These values are normalized power levels
-    
+
     // Base values with some variation
     final baseState = _mockCurrentState;
-    
+
     double delta, theta, alpha, beta, gamma;
-    
+
     switch (baseState) {
       case 'Calm':
         // High alpha, low beta
@@ -171,7 +171,7 @@ class EEGService {
         beta = 25 + _random.nextDouble() * 15;
         gamma = 5 + _random.nextDouble() * 5;
     }
-    
+
     return EEGData(
       timestamp: DateTime.now(),
       delta: delta,
@@ -182,29 +182,28 @@ class EEGService {
       state: baseState,
     );
   }
-  
+
   // Simulate changing mental states for demo
   String _mockCurrentState = 'Calm';
-  int _mockStateCounter = 0;
-  
+
   /// Change mock state (for testing)
   void setMockState(String state) {
     _mockCurrentState = state;
   }
-  
+
   // ============================================================
   // DATA PARSING (For real ESP32 data)
   // ============================================================
-  
+
   /// Parse raw serial data from ESP32
   /// Expected format: "Live,Delta,Theta,Alpha,Beta,Gamma"
   EEGData? parseSerialData(String line) {
     try {
       if (!line.startsWith('Live')) return null;
-      
+
       final parts = line.split(',');
       if (parts.length != 6) return null;
-      
+
       return EEGData(
         timestamp: DateTime.now(),
         delta: double.parse(parts[1]),
@@ -218,7 +217,7 @@ class EEGService {
       return null;
     }
   }
-  
+
   /// Clean up resources
   void dispose() {
     _mockDataTimer?.cancel();
@@ -235,7 +234,7 @@ class EEGData {
   final double beta;
   final double gamma;
   final String state;
-  
+
   EEGData({
     required this.timestamp,
     required this.delta,
@@ -245,7 +244,7 @@ class EEGData {
     required this.gamma,
     required this.state,
   });
-  
+
   /// Convert to band power map for algorithm processing
   Map<String, double> toBandPowerMap() {
     return {
@@ -256,11 +255,11 @@ class EEGData {
       'gamma': gamma,
     };
   }
-  
+
   @override
   String toString() {
     return 'EEGData(δ:${delta.toStringAsFixed(1)}, θ:${theta.toStringAsFixed(1)}, '
-           'α:${alpha.toStringAsFixed(1)}, β:${beta.toStringAsFixed(1)}, '
-           'γ:${gamma.toStringAsFixed(1)})';
+        'α:${alpha.toStringAsFixed(1)}, β:${beta.toStringAsFixed(1)}, '
+        'γ:${gamma.toStringAsFixed(1)})';
   }
 }

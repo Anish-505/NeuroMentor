@@ -1,17 +1,15 @@
-/// Technical articles for the focused reading phase
-/// Used as fallback when Wikipedia API is unavailable
-
 class Article {
   final String title;
   final String content;
-  
+
   const Article({required this.title, required this.content});
 }
 
 const List<Article> localArticles = [
   Article(
     title: 'Neural Network',
-    content: '''A neural network is a computational model inspired by the human brain. It consists of layers of interconnected nodes called neurons. Each neuron applies a weighted sum and a non-linear activation function. Neural networks are widely used for classification, regression, image recognition, and many other machine learning tasks.
+    content:
+        '''A neural network is a computational model inspired by the human brain. It consists of layers of interconnected nodes called neurons. Each neuron applies a weighted sum and a non-linear activation function. Neural networks are widely used for classification, regression, image recognition, and many other machine learning tasks.
 
 The basic building block is the perceptron, which takes multiple inputs, applies weights to each, sums them up, adds a bias term, and passes the result through an activation function. Common activation functions include ReLU (Rectified Linear Unit), sigmoid, and tanh.
 
@@ -21,10 +19,10 @@ Training a neural network involves adjusting the weights to minimize a loss func
 
 Modern advances include convolutional neural networks (CNNs) for images, recurrent neural networks (RNNs) for sequences, and transformers for natural language processing. These architectures have achieved superhuman performance on many tasks.''',
   ),
-  
   Article(
     title: 'Microcontroller',
-    content: '''A microcontroller is a small computer on a single integrated circuit. It typically includes a processor core, memory, and programmable input-output peripherals. Microcontrollers are used in embedded systems for tasks such as sensor reading, motor control, and communication with other devices.
+    content:
+        '''A microcontroller is a small computer on a single integrated circuit. It typically includes a processor core, memory, and programmable input-output peripherals. Microcontrollers are used in embedded systems for tasks such as sensor reading, motor control, and communication with other devices.
 
 Unlike general-purpose computers, microcontrollers are designed for specific control applications. They contain both program memory (usually flash) and data memory (RAM) on the same chip. This makes them compact, energy-efficient, and cost-effective for dedicated tasks.
 
@@ -34,10 +32,10 @@ Programming microcontrollers typically involves writing code in C or C++, compil
 
 Common applications include home automation, medical devices, automotive systems, industrial control, and wearable technology. The rise of the Internet of Things has dramatically increased demand for microcontroller-based solutions.''',
   ),
-  
   Article(
     title: 'Electroencephalography',
-    content: '''Electroencephalography, or EEG, is a non-invasive method for measuring the electrical activity of the brain using electrodes placed on the scalp. Each electrode records tiny voltage changes that arise when large groups of neurons become active together, especially pyramidal cells in the cortex.
+    content:
+        '''Electroencephalography, or EEG, is a non-invasive method for measuring the electrical activity of the brain using electrodes placed on the scalp. Each electrode records tiny voltage changes that arise when large groups of neurons become active together, especially pyramidal cells in the cortex.
 
 A single neuron produces a signal that is far too small to measure at the scalp, but when thousands of neurons fire in synchrony, their electrical fields add up and create a measurable signal that spreads through brain tissue, skull, and skin.
 
@@ -47,10 +45,10 @@ The EEG signal is typically decomposed into frequency bands: Delta (0.5-4 Hz) as
 
 Brain-computer interfaces use EEG to translate brain activity into commands for external devices. Applications range from helping paralyzed patients communicate to enhancing meditation practice and improving attention in educational settings.''',
   ),
-  
   Article(
     title: 'Quantum Computing',
-    content: '''Quantum computing is a model of computation that uses quantum-mechanical phenomena such as superposition and entanglement to process information. Instead of classical bits that are strictly 0 or 1, a quantum computer uses qubits that can exist in a combination of states.
+    content:
+        '''Quantum computing is a model of computation that uses quantum-mechanical phenomena such as superposition and entanglement to process information. Instead of classical bits that are strictly 0 or 1, a quantum computer uses qubits that can exist in a combination of states.
 
 Superposition allows a qubit to be in multiple states simultaneously. When you have multiple qubits, the number of possible states grows exponentially. Two qubits can represent four states at once, ten qubits can represent 1024 states, and so on.
 
@@ -60,10 +58,10 @@ By manipulating many qubits together, quantum algorithms can solve certain probl
 
 Current quantum computers are still limited by decoherence and error rates. They require extremely cold temperatures (near absolute zero) to maintain quantum states. Researchers are working on error correction and building more stable qubits to achieve practical quantum advantage.''',
   ),
-  
   Article(
     title: 'Machine Learning',
-    content: '''Machine learning is a subset of artificial intelligence that enables computers to learn from data without being explicitly programmed. Instead of following fixed rules, ML algorithms identify patterns in data and use them to make predictions or decisions.
+    content:
+        '''Machine learning is a subset of artificial intelligence that enables computers to learn from data without being explicitly programmed. Instead of following fixed rules, ML algorithms identify patterns in data and use them to make predictions or decisions.
 
 Supervised learning trains models on labeled data, where each input has a known correct output. The model learns to map inputs to outputs and can then generalize to new, unseen data. Common algorithms include linear regression, decision trees, and neural networks.
 

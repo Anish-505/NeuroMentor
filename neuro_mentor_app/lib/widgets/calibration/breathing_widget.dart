@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../config/theme.dart';
 
@@ -8,7 +7,7 @@ import '../../config/theme.dart';
 class BreathingWidget extends StatefulWidget {
   final List<int> breathPattern; // [Inhale, Hold, Exhale, Hold]
   final VoidCallback? onCycleComplete;
-  
+
   const BreathingWidget({
     super.key,
     required this.breathPattern,
@@ -26,13 +25,13 @@ class _BreathingWidgetState extends State<BreathingWidget>
   int _secondsRemaining = 0;
   Timer? _timer;
   int _cycleCount = 0;
-  
+
   final List<String> _phaseNames = ['INHALE', 'HOLD', 'EXHALE', 'HOLD'];
   final List<Color> _phaseColors = [
-    AppTheme.secondaryStart,  // Inhale - Blue
-    AppTheme.primaryStart,    // Hold - Purple
-    AppTheme.accentStart,     // Exhale - Green
-    AppTheme.primaryStart,    // Hold - Purple
+    AppTheme.secondaryStart, // Inhale - Blue
+    AppTheme.primaryStart, // Hold - Purple
+    AppTheme.accentStart, // Exhale - Green
+    AppTheme.primaryStart, // Hold - Purple
   ];
 
   @override
@@ -55,16 +54,16 @@ class _BreathingWidgetState extends State<BreathingWidget>
   void _startPhase(int phase) {
     _currentPhase = phase;
     _secondsRemaining = widget.breathPattern[phase];
-    
+
     // Skip phases with 0 duration
     if (_secondsRemaining == 0) {
       _advancePhase();
       return;
     }
-    
+
     // Set animation based on phase
     _controller.duration = Duration(seconds: _secondsRemaining);
-    
+
     if (phase == 0) {
       // Inhale - expand
       _controller.forward(from: 0.0);
@@ -73,7 +72,7 @@ class _BreathingWidgetState extends State<BreathingWidget>
       _controller.reverse(from: 1.0);
     }
     // Hold phases: animation stays still
-    
+
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
@@ -88,20 +87,20 @@ class _BreathingWidgetState extends State<BreathingWidget>
 
   void _advancePhase() {
     int nextPhase = (_currentPhase + 1) % 4;
-    
+
     // If we completed a full cycle
     if (nextPhase == 0) {
       _cycleCount++;
       widget.onCycleComplete?.call();
     }
-    
+
     _startPhase(nextPhase);
   }
 
   @override
   Widget build(BuildContext context) {
     final color = _phaseColors[_currentPhase];
-    
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -121,7 +120,7 @@ class _BreathingWidgetState extends State<BreathingWidget>
               // Hold: stay at current size
               size = _currentPhase == 1 ? 200 : 120;
             }
-            
+
             return Container(
               width: size,
               height: size,
@@ -153,9 +152,9 @@ class _BreathingWidgetState extends State<BreathingWidget>
             );
           },
         ),
-        
+
         const SizedBox(height: 32),
-        
+
         // Phase indicator
         AnimatedContainer(
           duration: const Duration(milliseconds: 300),
@@ -173,9 +172,9 @@ class _BreathingWidgetState extends State<BreathingWidget>
             ),
           ),
         ),
-        
+
         const SizedBox(height: 16),
-        
+
         // Cycle counter
         Text(
           'Cycle $_cycleCount',
@@ -183,9 +182,9 @@ class _BreathingWidgetState extends State<BreathingWidget>
             color: AppTheme.textMuted,
           ),
         ),
-        
+
         const SizedBox(height: 32),
-        
+
         // Pattern indicator
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -199,9 +198,8 @@ class _BreathingWidgetState extends State<BreathingWidget>
                     ? _phaseColors[index].withAlpha(100)
                     : Colors.white.withAlpha(10),
                 borderRadius: BorderRadius.circular(8),
-                border: isActive
-                    ? Border.all(color: _phaseColors[index])
-                    : null,
+                border:
+                    isActive ? Border.all(color: _phaseColors[index]) : null,
               ),
               child: Column(
                 children: [

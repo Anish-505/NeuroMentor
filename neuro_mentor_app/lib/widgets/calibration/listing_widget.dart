@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../config/theme.dart';
 
@@ -7,7 +6,7 @@ import '../../config/theme.dart';
 class ListingWidget extends StatefulWidget {
   final String category;
   final Function(int itemCount)? onSubmit;
-  
+
   const ListingWidget({
     super.key,
     required this.category,
@@ -48,13 +47,6 @@ class _ListingWidgetState extends State<ListingWidget> {
     });
   }
 
-  void _submit() {
-    setState(() {
-      _submitted = true;
-    });
-    widget.onSubmit?.call(_items.length);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -93,9 +85,9 @@ class _ListingWidgetState extends State<ListingWidget> {
             ],
           ),
         ),
-        
+
         const SizedBox(height: 24),
-        
+
         // Input field
         if (!_submitted)
           Row(
@@ -152,9 +144,9 @@ class _ListingWidgetState extends State<ListingWidget> {
               ),
             ],
           ),
-        
+
         const SizedBox(height: 24),
-        
+
         // Items list
         Container(
           width: double.infinity,
@@ -220,9 +212,9 @@ class _ListingWidgetState extends State<ListingWidget> {
                   ),
                 ),
         ),
-        
+
         const SizedBox(height: 16),
-        
+
         // Count display
         Text(
           '${_items.length} items listed',

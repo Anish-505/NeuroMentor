@@ -22,7 +22,7 @@ class CalibrationHomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 24),
-                
+
                 // Header
                 Row(
                   children: [
@@ -52,24 +52,24 @@ class CalibrationHomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 Text(
                   'Complete all three states to establish your personal EEG baseline for accurate attention monitoring.',
                   style: AppTheme.bodyRegular.copyWith(
                     color: AppTheme.textMuted,
                   ),
                 ),
-                
+
                 const SizedBox(height: 32),
-                
+
                 // State cards
                 ...stateConfig.entries.map((entry) {
                   final stateName = entry.key;
                   final config = entry.value;
                   final totalMinutes = config.totalSeconds ~/ 60;
-                  
+
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: _StateCard(
@@ -89,9 +89,9 @@ class CalibrationHomeScreen extends StatelessWidget {
                     ),
                   );
                 }),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Info card
                 GlassCard(
                   padding: const EdgeInsets.all(20),
@@ -136,9 +136,9 @@ class CalibrationHomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                
+
                 const SizedBox(height: 32),
-                
+
                 // Skip calibration option
                 Center(
                   child: GestureDetector(
@@ -154,7 +154,7 @@ class CalibrationHomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                
+
                 const SizedBox(height: 32),
               ],
             ),
@@ -163,7 +163,7 @@ class CalibrationHomeScreen extends StatelessWidget {
       ),
     );
   }
-  
+
   IconData _getStateIcon(String stateName) {
     switch (stateName) {
       case 'Calm':
@@ -176,42 +176,7 @@ class CalibrationHomeScreen extends StatelessWidget {
         return LucideIcons.brain;
     }
   }
-  
-  void _showComingSoonDialog(BuildContext context, String stateName) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: AppTheme.cardBackground,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
-        title: Text(
-          '$stateName Calibration',
-          style: AppTheme.headingMedium,
-        ),
-        content: Text(
-          'The full calibration session interface is coming soon. '
-          'This will include all the breathing, math, Stroop, reading, and recall tasks.',
-          style: AppTheme.bodyRegular.copyWith(
-            color: AppTheme.textSecondary,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              'OK',
-              style: AppTheme.bodyRegular.copyWith(
-                color: AppTheme.primaryStart,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  
+
   void _showSkipDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -270,7 +235,7 @@ class _StateCard extends StatelessWidget {
   final String duration;
   final IconData icon;
   final VoidCallback onTap;
-  
+
   const _StateCard({
     required this.name,
     required this.description,

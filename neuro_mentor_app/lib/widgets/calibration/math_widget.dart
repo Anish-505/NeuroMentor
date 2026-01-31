@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../config/theme.dart';
@@ -11,7 +10,7 @@ class MathWidget extends StatefulWidget {
   final int startValue;
   final int stepValue;
   final Function(int correct, int total)? onScoreUpdate;
-  
+
   const MathWidget({
     super.key,
     required this.operation,
@@ -27,7 +26,7 @@ class MathWidget extends StatefulWidget {
 class _MathWidgetState extends State<MathWidget> {
   final _controller = TextEditingController();
   final _focusNode = FocusNode();
-  
+
   late int _currentValue;
   int _correctCount = 0;
   int _totalAttempts = 0;
@@ -50,7 +49,7 @@ class _MathWidgetState extends State<MathWidget> {
   void _checkAnswer() {
     final input = _controller.text.trim();
     if (input.isEmpty) return;
-    
+
     final userAnswer = int.tryParse(input);
     if (userAnswer == null) {
       setState(() {
@@ -59,7 +58,7 @@ class _MathWidgetState extends State<MathWidget> {
       });
       return;
     }
-    
+
     // Calculate expected answer
     int expected;
     if (widget.operation == MathOp.subtract) {
@@ -67,9 +66,9 @@ class _MathWidgetState extends State<MathWidget> {
     } else {
       expected = _currentValue + widget.stepValue;
     }
-    
+
     _totalAttempts++;
-    
+
     if (userAnswer == expected) {
       _correctCount++;
       _currentValue = expected;
@@ -79,10 +78,10 @@ class _MathWidgetState extends State<MathWidget> {
       _feedback = 'Try again! Expected: $expected';
       _isCorrect = false;
     }
-    
+
     setState(() {});
     widget.onScoreUpdate?.call(_correctCount, _totalAttempts);
-    
+
     // Clear input for next attempt
     _controller.clear();
     _focusNode.requestFocus();
@@ -91,7 +90,7 @@ class _MathWidgetState extends State<MathWidget> {
   @override
   Widget build(BuildContext context) {
     final opSymbol = widget.operation == MathOp.subtract ? '−' : '+';
-    
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -130,9 +129,9 @@ class _MathWidgetState extends State<MathWidget> {
             ],
           ),
         ),
-        
+
         const SizedBox(height: 32),
-        
+
         // Answer input
         SizedBox(
           width: 200,
@@ -166,7 +165,9 @@ class _MathWidgetState extends State<MathWidget> {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
                 borderSide: BorderSide(
-                  color: _isCorrect ? AppTheme.focusedColor : AppTheme.primaryStart,
+                  color: _isCorrect
+                      ? AppTheme.focusedColor
+                      : AppTheme.primaryStart,
                   width: 2,
                 ),
               ),
@@ -174,9 +175,9 @@ class _MathWidgetState extends State<MathWidget> {
             onSubmitted: (_) => _checkAnswer(),
           ),
         ),
-        
+
         const SizedBox(height: 16),
-        
+
         // Submit button
         GestureDetector(
           onTap: _checkAnswer,
@@ -200,30 +201,32 @@ class _MathWidgetState extends State<MathWidget> {
             ),
           ),
         ),
-        
+
         const SizedBox(height: 24),
-        
+
         // Feedback
         if (_feedback != null)
           AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
-              color: (_isCorrect ? AppTheme.focusedColor : AppTheme.stressedColor)
-                  .withAlpha(30),
+              color:
+                  (_isCorrect ? AppTheme.focusedColor : AppTheme.stressedColor)
+                      .withAlpha(30),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
               _feedback!,
               style: AppTheme.bodyLarge.copyWith(
-                color: _isCorrect ? AppTheme.focusedColor : AppTheme.stressedColor,
+                color:
+                    _isCorrect ? AppTheme.focusedColor : AppTheme.stressedColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-        
+
         const SizedBox(height: 24),
-        
+
         // Score display
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
