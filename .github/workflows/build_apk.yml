@@ -71,6 +71,9 @@ jobs:
     - name: Build debug APK
       run: |
         buildozer android debug 2>&1 | tee build_log.txt
+      env:
+        MATHLIB: m
+        MAX_JOBS: 1
 
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
@@ -80,7 +83,7 @@ jobs:
         retention-days: 30
 
     - name: Upload build log on failure
-      if: failure()
+      if: always()
       uses: actions/upload-artifact@v4
       with:
         name: build-log
