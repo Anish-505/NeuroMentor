@@ -39,7 +39,7 @@ version = 1.0.0
 # NOT used (confirmed by reading all source):
 #   kivymd, pillow, requests, plyer, scipy
 # ──────────────────────────────────────────────────────────────────
-requirements = python3,kivy==2.3.0,pyjnius,numpy,joblib,scikit-learn
+requirements = python3,kivy==2.3.0,pyjnius,numpy,joblib
 
 # (str) Custom source folders for requirements
 # p4a.source_dir =
