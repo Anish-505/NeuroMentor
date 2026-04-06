@@ -1,0 +1,13 @@
+.buildozer/
+bin/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.log
+error*.txt
+crash.log
+.gradle/
+*.egg-info/
+neuromentor_data/
+*.pkl

@@ -1,0 +1,38 @@
+{
+    "anish": {
+        "username": "anish",
+        "name": "anish",
+        "age": "18",
+        "notes": "arsonist",
+        "created_date": "2026-03-19T22:50:15.312374",
+        "scores": [],
+        "last_login": "2026-03-24T22:49:59.938460"
+    },
+    "Anish": {
+        "username": "Anish",
+        "name": "Anish",
+        "age": "18",
+        "notes": "",
+        "created_date": "2026-03-19T23:12:16.493651",
+        "scores": [],
+        "last_login": "2026-03-24T23:18:25.392359"
+    },
+    "test": {
+        "username": "test",
+        "name": "anish",
+        "age": "18",
+        "notes": "",
+        "created_date": "2026-03-20T13:25:12.733026",
+        "scores": [],
+        "last_login": "2026-03-24T22:49:59.938491"
+    },
+    "ankit": {
+        "username": "ankit",
+        "name": "ankit",
+        "age": "",
+        "notes": "",
+        "created_date": "2026-03-23T12:38:56.176987",
+        "scores": [],
+        "last_login": "2026-03-24T22:49:59.938495"
+    }
+}
