@@ -2,7 +2,7 @@ name: Build NeuroMentor APK
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, kivy-upload ]
   workflow_dispatch:
 
 jobs:
