@@ -15,7 +15,7 @@ class ScikitLearnRecipe(PythonRecipe):
     """Build scikit-learn from source for Android ARM targets."""
 
     name = 'scikit_learn'
-    version = '1.3.2'
+    version = '1.2.2'
     url = 'https://pypi.io/packages/source/s/scikit-learn/scikit-learn-{version}.tar.gz'
 
     depends = ['numpy', 'scipy', 'cython', 'setuptools', 'joblib']
